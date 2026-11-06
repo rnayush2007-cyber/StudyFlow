@@ -104,15 +104,6 @@ textarea:focus-visible {
   margin: 35px 0;
 }
 
-
-/* SIDEBAR NAVIGATION FIX */
-
-.nav {
-  display: grid;
-  gap: 5px;
-  margin: 35px 0;
-}
-
 .nav button {
   display: flex;
   align-items: center;
@@ -131,29 +122,14 @@ textarea:focus-visible {
   cursor: pointer;
 }
 
-.nav button:hover {
+.nav button:hover,
+.nav button.active {
   background: var(--soft);
   color: var(--primary);
 }
 
 .nav button.active {
-  background: var(--soft);
-  color: var(--primary);
   font-weight: 750;
-}
-
-/* Responsive navigation */
-@media (max-width: 800px) {
-  .nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 18px 0;
-  }
-
-  .nav button {
-    width: auto;
-  }
 }
 
 /* MAIN CONTENT */
@@ -279,7 +255,7 @@ button:hover {
   filter: brightness(1.06);
 }
 
-/* FORM ELEMENTS */
+/* FORMS */
 
 input,
 select,
@@ -407,7 +383,7 @@ label {
   overflow-wrap: anywhere;
 }
 
-/* POMODORO */
+/* FOCUS TIMER */
 
 .big-timer {
   text-align: center;
@@ -532,7 +508,7 @@ label {
   background: transparent;
 }
 
-/* GENERAL UTILITIES */
+/* UTILITIES */
 
 .empty {
   color: var(--muted);
@@ -540,14 +516,7 @@ label {
   font-size: 14px;
 }
 
-.section-heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
+.section-heading,
 .small-row {
   display: flex;
   justify-content: space-between;
@@ -586,68 +555,8 @@ footer {
   margin-top: 40px;
 }
 
-/* TABLET */
+/* CUSTOM STUDYFLOW LOGO */
 
-@media (max-width: 1050px) {
-  .week-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-/* MOBILE */
-
-@media (max-width: 800px) {
-  .app {
-    display: block;
-  }
-
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: static;
-  }
-
-  .nav {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 18px 0;
-  }
-
-  .nav button {
-    width: auto;
-  }
-
-  .main {
-    padding: 18px;
-  }
-
-  .grid,
-  .grid.two {
-    grid-template-columns: 1fr;
-  }
-
-  .week-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .topbar h1 {
-    font-size: 24px;
-  }
-}
-
-/* SMALL PHONES */
-
-@media (max-width: 420px) {
-  .week-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .item {
-    flex-wrap: wrap;
-  }
-}
-
-/* StudyFlow custom logo */
 .app-logo {
   width: 100%;
   max-width: 210px;
@@ -656,7 +565,8 @@ footer {
   display: block;
 }
 
-/* Dashboard banner */
+/* DASHBOARD BANNER */
+
 .dashboard-banner {
   width: 100%;
   border-radius: 18px;
@@ -669,26 +579,12 @@ footer {
 .dashboard-banner img {
   display: block;
   width: 100%;
-  height: auto;
-}
-
-/* Compact dashboard banner */
-.dashboard-banner img {
-  width: 100%;
   height: 320px;
   object-fit: cover;
   object-position: center 55%;
 }
 
-@media (max-width: 600px) {
-  .dashboard-banner img {
-    height: 200px;
-  }
-}
-
-/* ==================================
-   BACKUP AND RESTORE BUTTONS
-   ================================== */
+/* BACKUP AND RESTORE */
 
 .backup-section {
   margin-top: 28px;
@@ -784,17 +680,7 @@ body.dark .import-button {
   flex-wrap: wrap;
 }
 
-@media (max-width: 600px) {
-  .material-item {
-    flex-wrap: wrap;
-  }
-
-  .material-actions {
-    width: 100%;
-  }
-}
-
-/* STUDYFLOW LOGIN */
+/* LOGIN OVERLAY */
 
 .cloud-gate {
   position: fixed;
@@ -828,6 +714,8 @@ body.dark .import-button {
   display: block;
   width: 210px;
   max-width: 100%;
+  height: auto;
+  object-fit: contain;
   margin: 0 auto 20px;
 }
 
@@ -870,6 +758,7 @@ body.dark .import-button {
 #cloudStatus {
   font-size: 13px;
   overflow-wrap: anywhere;
+  white-space: pre-line;
 }
 
 /* CLOUD ACCOUNT SHORTCUT */
@@ -879,17 +768,13 @@ body.dark .import-button {
   bottom: 22px;
   right: 22px;
   z-index: 1000;
-
   background: #6655eb;
   color: white;
-
   padding: 12px 18px;
   border: none;
   border-radius: 12px;
-
   font-weight: 700;
   cursor: pointer;
-
   box-shadow: 0 6px 20px #0003;
 }
 
@@ -899,4 +784,87 @@ body.dark .import-button {
 
 #openCloudAccount[hidden] {
   display: none !important;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 1050px) {
+  .week-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 800px) {
+  .app {
+    display: block;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 18px 0;
+  }
+
+  .nav button {
+    width: auto;
+  }
+
+  .main {
+    padding: 18px;
+  }
+
+  .grid,
+  .grid.two {
+    grid-template-columns: 1fr;
+  }
+
+  .week-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .topbar h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-banner img {
+    height: 200px;
+  }
+
+  .material-item {
+    flex-wrap: wrap;
+  }
+
+  .material-actions {
+    width: 100%;
+  }
+
+  .cloud-login-card {
+    padding: 24px;
+  }
+
+  #openCloudAccount {
+    bottom: 16px;
+    right: 16px;
+    padding: 11px 14px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 420px) {
+  .week-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .item {
+    flex-wrap: wrap;
+  }
 }
