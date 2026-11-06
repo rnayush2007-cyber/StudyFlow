@@ -1,0 +1,1276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>StudyFlow 2.0 | Ayush</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JAVASCRIPT -->
+  <script src="script.js" defer></script>
+  <script src="backup.js" defer></script>
+
+<script src="account-storage.js"></script>
+
+<script src="script.js" defer></script>
+<script src="backup.js" defer></script>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  defer>
+</script>
+
+<script src="cloud.js" defer></script>
+
+</head>
+
+<!-- STUDYFLOW LOGIN SCREEN -->
+<div id="cloudGate" class="cloud-gate">
+
+  <div class="cloud-login-card">
+
+    <img src="images/logo.png"
+         alt="StudyFlow"
+         class="cloud-logo">
+
+    <h2 id="cloudHeading">
+      Welcome to StudyFlow
+    </h2>
+
+    <p id="cloudMessage">
+      Your academic workspace, now in the cloud.
+    </p>
+
+    <div id="cloudLogin">
+
+      <form id="cloudEmailForm">
+
+        <input
+          type="email"
+          id="cloudEmail"
+          placeholder="Email address"
+          autocomplete="email"
+          required>
+
+        <input
+          type="password"
+          id="cloudPassword"
+          placeholder="Password"
+          autocomplete="current-password"
+          minlength="8"
+          required>
+
+        <button type="submit" id="cloudEmailLogin">
+          Log In with Email
+        </button>
+
+      </form>
+
+      <button type="button" id="cloudRegister">
+        Create Email Account
+      </button>
+
+      <button type="button" id="cloudGoogle">
+        Continue with Google
+      </button>
+
+    </div>
+
+    <div id="cloudChoices" hidden>
+
+      <p id="cloudAccount"></p>
+
+      <button type="button" id="cloudRestore">
+        ☁️ Restore Cloud Data
+      </button>
+
+      <button type="button" id="cloudUpload">
+        ⬆️ Upload Local Data to Cloud
+      </button>
+
+      <button type="button" id="cloudLocal">
+        💻 Open Local Workspace
+      </button>
+
+      <button type="button" id="cloudBackup">
+        📥 Download Local JSON Backup
+      </button>
+
+      <button type="button" id="cloudSignOutGate">
+        Sign Out
+      </button>
+
+    </div>
+
+    <p id="cloudStatus" role="status"></p>
+
+  </div>
+
+</div>
+
+<body>
+
+<div class="app">
+
+  <!-- ======================================
+       SIDEBAR
+       ====================================== -->
+
+  <aside class="sidebar">
+
+    <!-- LOGO -->
+    <div class="logo">
+      <img
+        src="images/logo.png"
+        alt="StudyFlow Logo"
+        class="app-logo">
+    </div>
+
+    <div class="subtitle">
+      Your academic workspace
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="nav" id="navigation">
+
+      <button
+        type="button"
+        class="active"
+        data-page="dashboard">
+        📊 Dashboard
+      </button>
+
+      <button
+        type="button"
+        data-page="semesters">
+        🎓 Semesters
+      </button>
+
+      <button
+        type="button"
+        data-page="subjects">
+        📚 Subjects
+      </button>
+
+      <button
+        type="button"
+        data-page="tasks">
+        ✅ Tasks
+      </button>
+
+      <button
+        type="button"
+        data-page="timetable">
+        📅 Timetable
+      </button>
+
+      <button
+        type="button"
+        data-page="exams">
+        ⏳ Exams
+      </button>
+
+      <button
+        type="button"
+        data-page="analytics">
+        📈 Analytics
+      </button>
+
+      <button
+        type="button"
+        data-page="pomodoro">
+        ⏱️ Focus Timer
+      </button>
+
+      <button
+        type="button"
+        data-page="notes">
+        📝 Notes
+      </button>
+
+      <button
+        type="button"
+        data-page="materials">
+        📂 Study Materials
+      </button>
+
+      <button
+        type="button"
+        data-page="assistant">
+        🤖 Study Assistant
+      </button>
+
+    </nav>
+
+    <!-- DARK MODE -->
+    <button
+      type="button"
+      class="primary full-width"
+      id="themeBtn">
+      🌙 Dark Mode
+    </button>
+
+    <!-- DATA MANAGEMENT -->
+    <div class="backup-section">
+
+      <h3>💾 Data Management</h3>
+
+      <button
+        type="button"
+        id="exportBtn"
+        class="backup-button export-button">
+        📥 Export Data
+      </button>
+
+      <button
+        type="button"
+        id="importBtn"
+        class="backup-button import-button">
+        📤 Import Data
+      </button>
+
+      <input
+        type="file"
+        id="importFile"
+        accept=".json,application/json"
+        hidden>
+
+      <p class="backup-help">
+        Backup or restore your academic records.
+      </p>
+
+    </div>
+
+  </aside>
+
+  <!-- ======================================
+       MAIN APPLICATION
+       ====================================== -->
+
+  <main class="main">
+
+    <!-- HEADER -->
+    <header class="topbar">
+
+      <div>
+        <div class="muted">
+          WELCOME BACK
+        </div>
+
+        <h1>Hey, Ayush! 👋</h1>
+
+        <div class="muted">
+          Let's make today productive.
+        </div>
+      </div>
+
+      <div class="top-actions">
+
+        <select
+          id="globalSemester"
+          aria-label="Active semester">
+        </select>
+
+        <span class="avatar">A</span>
+
+      </div>
+
+    </header>
+
+    <!-- ======================================
+         DASHBOARD
+         ====================================== -->
+
+    <section
+      class="page active"
+      id="dashboard">
+
+      <!-- DASHBOARD BANNER -->
+      <div class="dashboard-banner">
+
+        <img
+          src="images/dashboard-banner.png"
+          alt="StudyFlow Dashboard">
+
+      </div>
+
+      <!-- DASHBOARD STATISTICS -->
+      <div class="grid">
+
+        <div class="card">
+
+          <div class="stat-label">
+            Total Tasks
+          </div>
+
+          <div
+            class="stat-value"
+            id="dashTotal">
+            0
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="stat-label">
+            Completed Tasks
+          </div>
+
+          <div
+            class="stat-value"
+            id="dashDone">
+            0
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="stat-label">
+            Upcoming Exams
+          </div>
+
+          <div
+            class="stat-value"
+            id="dashExams">
+            0
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="card">
+
+        <h2>📈 Overall Progress</h2>
+
+        <p
+          class="muted"
+          id="dashProgressText">
+          0% completed
+        </p>
+
+        <div class="progress-track">
+
+          <div
+            class="progress-fill"
+            id="dashProgressBar">
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PENDING TASKS AND NEXT EXAM -->
+      <div class="grid two">
+
+        <div class="card">
+
+          <h2>✅ Pending Tasks</h2>
+
+          <div id="dashTaskList"></div>
+
+          <button
+            type="button"
+            class="secondary"
+            data-go="tasks">
+            Manage Tasks
+          </button>
+
+        </div>
+
+        <div class="card">
+
+          <h2>⏳ Next Exam</h2>
+
+          <div id="nextExam"></div>
+
+          <button
+            type="button"
+            class="secondary"
+            data-go="exams">
+            Manage Exams
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- FOCUS TIME AND SEMESTER -->
+      <div class="grid two">
+
+        <div class="card">
+
+          <h2>⏱️ Focus Time</h2>
+
+          <div
+            class="stat-value"
+            id="dashFocus">
+            0 min
+          </div>
+
+          <p class="muted">
+            Recorded study time for this semester
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <h2>📚 Semester Overview</h2>
+
+          <div id="semesterOverview"></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         SEMESTER MANAGEMENT
+         ====================================== -->
+
+    <section
+      class="page"
+      id="semesters">
+
+      <h2>🎓 Semester Management</h2>
+
+      <div class="card">
+
+        <h2>Add New Semester</h2>
+
+        <form
+          id="semesterForm"
+          class="form-row">
+
+          <div class="field">
+
+            <label for="semesterName">
+              Semester Name
+            </label>
+
+            <input
+              type="text"
+              id="semesterName"
+              placeholder="Example: Semester 4"
+              maxlength="60"
+              required>
+
+          </div>
+
+          <button
+            type="submit"
+            class="primary">
+            + Add Semester
+          </button>
+
+        </form>
+
+        <p class="muted">
+          Each semester contains its own subjects,
+          tasks, timetable, exams, notes
+          and study records.
+        </p>
+
+      </div>
+
+      <div
+        class="grid two"
+        id="semesterList">
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         SUBJECT MANAGEMENT
+         ====================================== -->
+
+    <section
+      class="page"
+      id="subjects">
+
+      <h2>📚 Subject Management</h2>
+
+      <div class="card">
+
+        <h2>Add New Subject</h2>
+
+        <form
+          id="subjectForm"
+          class="form-row">
+
+          <div class="field">
+
+            <label for="subjectName">
+              Subject Name
+            </label>
+
+            <input
+              type="text"
+              id="subjectName"
+              placeholder="Example: Molecular Biology"
+              maxlength="80"
+              required>
+
+          </div>
+
+          <button
+            type="submit"
+            class="primary">
+            + Add Subject
+          </button>
+
+        </form>
+
+        <p class="muted">
+          Subjects will be added to the currently
+          selected semester.
+        </p>
+
+      </div>
+
+      <div
+        class="grid two"
+        id="subjectList">
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         TASK MANAGER
+         ====================================== -->
+
+    <section
+      class="page"
+      id="tasks">
+
+      <h2>✅ Task Manager</h2>
+
+      <div class="card">
+
+        <h2>Add New Task</h2>
+
+        <form
+          id="taskForm"
+          class="form-row">
+
+          <div class="field">
+
+            <label for="taskInput">
+              Task Name
+            </label>
+
+            <input
+              type="text"
+              id="taskInput"
+              placeholder="What do you need to complete?"
+              maxlength="160"
+              required>
+
+          </div>
+
+          <div class="field">
+
+            <label for="taskSubject">
+              Subject
+            </label>
+
+            <select id="taskSubject"></select>
+
+          </div>
+
+          <div class="field">
+
+            <label for="taskDue">
+              Due Date
+            </label>
+
+            <input
+              type="date"
+              id="taskDue">
+
+          </div>
+
+          <button
+            type="submit"
+            class="primary">
+            + Add Task
+          </button>
+
+        </form>
+
+      </div>
+
+      <div class="card">
+
+        <div class="small-row">
+
+          <h2>My Tasks</h2>
+
+          <span
+            class="pill"
+            id="taskCount">
+            0 tasks
+          </span>
+
+        </div>
+
+        <div class="progress-track">
+
+          <div
+            class="progress-fill"
+            id="taskProgress">
+          </div>
+
+        </div>
+
+        <div id="taskList"></div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         TIMETABLE
+         ====================================== -->
+
+    <section
+      class="page"
+      id="timetable">
+
+      <h2>📅 Smart Timetable</h2>
+
+      <div class="card">
+
+        <h2>Add Class or Study Session</h2>
+
+        <form
+          id="scheduleForm"
+          class="form-row">
+
+          <div class="field">
+
+            <label for="scheduleSubject">
+              Subject
+            </label>
+
+            <select id="scheduleSubject"></select>
+
+          </div>
+
+          <div class="field">
+
+            <label for="scheduleDay">
+              Day
+            </label>
+
+            <select id="scheduleDay">
+              <option>Monday</option>
+              <option>Tuesday</option>
+              <option>Wednesday</option>
+              <option>Thursday</option>
+              <option>Friday</option>
+              <option>Saturday</option>
+              <option>Sunday</option>
+            </select>
+
+          </div>
+
+          <div class="field">
+
+            <label for="scheduleStart">
+              Start Time
+            </label>
+
+            <input
+              type="time"
+              id="scheduleStart"
+              required>
+
+          </div>
+
+          <div class="field">
+
+            <label for="scheduleEnd">
+              End Time
+            </label>
+
+            <input
+              type="time"
+              id="scheduleEnd"
+              required>
+
+          </div>
+
+          <div class="field">
+
+            <label for="scheduleType">
+              Session Type
+            </label>
+
+            <select id="scheduleType">
+              <option>Class</option>
+              <option>Study</option>
+              <option>Revision</option>
+              <option>Practical</option>
+            </select>
+
+          </div>
+
+          <button
+            type="submit"
+            class="primary">
+            + Add Session
+          </button>
+
+        </form>
+
+      </div>
+
+      <div class="card">
+
+        <h2>Weekly Timetable</h2>
+
+        <div
+          class="week-grid"
+          id="weekGrid">
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         EXAM COUNTDOWN
+         ====================================== -->
+
+    <section
+      class="page"
+      id="exams">
+
+      <h2>⏳ Exam Countdown</h2>
+
+      <div class="card">
+
+        <h2>Add Upcoming Exam</h2>
+
+        <form
+          id="examForm"
+          class="form-row">
+
+          <div class="field">
+
+            <label for="examName">
+              Exam Name
+            </label>
+
+            <input
+              type="text"
+              id="examName"
+              placeholder="Example: MSE 2"
+              maxlength="100"
+              required>
+
+          </div>
+
+          <div class="field">
+
+            <label for="examSubject">
+              Subject
+            </label>
+
+            <select id="examSubject"></select>
+
+          </div>
+
+          <div class="field">
+
+            <label for="examDate">
+              Exam Date
+            </label>
+
+            <input
+              type="date"
+              id="examDate"
+              required>
+
+          </div>
+
+          <button
+            type="submit"
+            class="primary">
+            + Add Exam
+          </button>
+
+        </form>
+
+      </div>
+
+      <div
+        class="grid two"
+        id="examList">
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         STUDY ANALYTICS
+         ====================================== -->
+
+    <section
+      class="page"
+      id="analytics">
+
+      <h2>📈 Study Analytics</h2>
+
+      <div class="grid">
+
+        <div class="card">
+
+          <div class="stat-label">
+            Completion Rate
+          </div>
+
+          <div
+            class="stat-value"
+            id="analyticsRate">
+            0%
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="stat-label">
+            Focus Sessions
+          </div>
+
+          <div
+            class="stat-value"
+            id="analyticsSessions">
+            0
+          </div>
+
+        </div>
+
+        <div class="card">
+
+          <div class="stat-label">
+            Study Minutes
+          </div>
+
+          <div
+            class="stat-value"
+            id="analyticsMinutes">
+            0
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <h2>Subject-wise Task Progress</h2>
+
+        <div id="subjectAnalytics"></div>
+
+      </div>
+
+      <div class="card">
+
+        <h2>Study Time by Date</h2>
+
+        <div id="dailyAnalytics"></div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         POMODORO TIMER
+         ====================================== -->
+
+    <section
+      class="page"
+      id="pomodoro">
+
+      <h2>⏱️ Pomodoro Focus Timer</h2>
+
+      <div class="card center">
+
+        <span
+          class="pill"
+          id="timerMode">
+          Focus Session
+        </span>
+
+        <div
+          class="big-timer"
+          id="timerDisplay">
+          25:00
+        </div>
+
+        <div class="timer-controls">
+
+          <button
+            type="button"
+            class="primary"
+            id="timerStart">
+            ▶ Start
+          </button>
+
+          <button
+            type="button"
+            class="secondary"
+            id="timerPause">
+            ⏸ Pause
+          </button>
+
+          <button
+            type="button"
+            class="secondary"
+            id="timerReset">
+            ↻ Reset
+          </button>
+
+        </div>
+
+        <hr>
+
+        <div class="form-row">
+
+          <div class="field">
+
+            <label for="focusMinutes">
+              Focus Duration (minutes)
+            </label>
+
+            <input
+              type="number"
+              id="focusMinutes"
+              min="1"
+              max="180"
+              value="25">
+
+          </div>
+
+          <div class="field">
+
+            <label for="breakMinutes">
+              Break Duration (minutes)
+            </label>
+
+            <input
+              type="number"
+              id="breakMinutes"
+              min="1"
+              max="60"
+              value="5">
+
+          </div>
+
+        </div>
+
+        <p class="muted">
+          Complete a focus session to record
+          your study time.
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         NOTES MANAGER
+         ====================================== -->
+
+    <section
+      class="page"
+      id="notes">
+
+      <h2>📝 Notes Manager</h2>
+
+      <div class="card">
+
+        <h2 id="noteFormTitle">
+          Create Note
+        </h2>
+
+        <form id="noteForm">
+
+          <div class="form-row">
+
+            <div class="field">
+
+              <label for="noteTitle">
+                Note Title
+              </label>
+
+              <input
+                type="text"
+                id="noteTitle"
+                placeholder="Example: Enzyme Kinetics"
+                maxlength="120"
+                required>
+
+            </div>
+
+            <div class="field">
+
+              <label for="noteSubject">
+                Subject
+              </label>
+
+              <select id="noteSubject"></select>
+
+            </div>
+
+          </div>
+
+          <label for="noteBody">
+            Note Content
+          </label>
+
+          <textarea
+            id="noteBody"
+            placeholder="Write your notes here..."
+            required></textarea>
+
+          <div class="form-row">
+
+            <button
+              type="submit"
+              class="primary"
+              id="noteSave">
+              Save Note
+            </button>
+
+            <button
+              type="button"
+              class="secondary"
+              id="noteCancel">
+              Cancel Edit
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+      <div
+        class="grid two"
+        id="notesList">
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         STUDY MATERIALS
+         ====================================== -->
+
+    <section
+      class="page"
+      id="materials">
+
+      <h2>📂 Study Materials</h2>
+
+      <div class="card">
+
+        <h2>Upload Study Material</h2>
+
+        <p class="muted">
+          Upload PDFs, Word documents,
+          PowerPoint presentations,
+          Excel spreadsheets, images
+          and other study files.
+        </p>
+
+        <form id="materialForm">
+
+          <div class="form-row">
+
+            <div class="field">
+
+              <label for="materialSubject">
+                Select Subject
+              </label>
+
+              <select
+                id="materialSubject">
+              </select>
+
+            </div>
+
+            <div class="field">
+
+              <label for="materialFile">
+                Choose File
+              </label>
+
+              <input
+                type="file"
+                id="materialFile"
+                accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.csv,.txt,.md,.png,.jpg,.jpeg"
+                required>
+
+            </div>
+
+          </div>
+
+          <button
+            type="submit"
+            class="primary">
+            📤 Upload Material
+          </button>
+
+          <p class="muted">
+            Maximum file size: 25 MB.
+            Documents are stored locally
+            in this browser using IndexedDB.
+          </p>
+
+        </form>
+
+      </div>
+
+      <div class="card">
+
+        <div class="small-row">
+
+          <h2>My Uploaded Files</h2>
+
+          <span
+            class="pill"
+            id="materialCount">
+            0 files
+          </span>
+
+        </div>
+
+        <div id="materialList"></div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================
+         STUDY ASSISTANT
+         ====================================== -->
+
+    <section
+      class="page"
+      id="assistant">
+
+      <h2>🤖 Study Assistant</h2>
+
+      <div class="card">
+
+        <p class="muted">
+          Your offline study assistant can help
+          with tasks, exam countdowns, subjects,
+          progress and study plans.
+
+          A real generative AI service
+          can be connected later.
+        </p>
+
+        <div
+          class="chat-log"
+          id="chatLog"
+          aria-live="polite">
+        </div>
+
+        <form
+          id="chatForm"
+          class="form-row">
+
+          <div class="field">
+
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="Ask about exams, tasks or study plans..."
+              maxlength="500"
+              required>
+
+          </div>
+
+          <button
+            type="submit"
+            class="primary">
+            Send
+          </button>
+
+        </form>
+
+        <div class="form-row">
+
+          <button
+            type="button"
+            class="secondary"
+            data-ask="Plan my study">
+            Plan My Study
+          </button>
+
+          <button
+            type="button"
+            class="secondary"
+            data-ask="Upcoming exams">
+            Upcoming Exams
+          </button>
+
+          <button
+            type="button"
+            class="secondary"
+            data-ask="My progress">
+            My Progress
+          </button>
+
+          <button
+            type="button"
+            class="secondary"
+            data-ask="Help">
+            What can you do?
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      StudyFlow 2.0 • Built by Ayush ❤️
+    </footer>
+
+  </main>
+
+</div>
+
+<!-- NOTIFICATION SYSTEM -->
+<div
+  id="notice"
+  role="status"
+  aria-live="polite">
+</div>
+
+<!-- OPEN CLOUD ACCOUNT -->
+<button id="openCloudAccount" type="button">
+  ☁️ Cloud Account
+</button>
+
+</body>
+</html>

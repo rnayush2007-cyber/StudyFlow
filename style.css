@@ -1,0 +1,902 @@
+
+/* =====================================
+   STUDYFLOW 2.0 — MAIN STYLESHEET
+   ===================================== */
+
+:root {
+  --bg: #f5f6fc;
+  --card: #ffffff;
+  --text: #1e2540;
+  --muted: #8189a2;
+  --primary: #6655eb;
+  --border: #e5e8f2;
+  --soft: #eeeaff;
+  --danger: #ef4444;
+  --green: #16a56a;
+}
+
+body.dark {
+  --bg: #101525;
+  --card: #1c2336;
+  --text: #f1f4ff;
+  --muted: #a5aec6;
+  --primary: #9888ff;
+  --border: #353d55;
+  --soft: #302a53;
+}
+
+/* BASE */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Arial, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #a99cff;
+  outline-offset: 2px;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 255px;
+  flex-shrink: 0;
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  padding: 28px 18px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.logo {
+  font-size: 25px;
+  color: var(--primary);
+  font-weight: 850;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 7px;
+}
+
+.nav {
+  display: grid;
+  gap: 5px;
+  margin: 35px 0;
+}
+
+
+/* SIDEBAR NAVIGATION FIX */
+
+.nav {
+  display: grid;
+  gap: 5px;
+  margin: 35px 0;
+}
+
+.nav button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 45px;
+  text-align: left;
+  padding: 13px;
+  border: none;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.nav button:hover {
+  background: var(--soft);
+  color: var(--primary);
+}
+
+.nav button.active {
+  background: var(--soft);
+  color: var(--primary);
+  font-weight: 750;
+}
+
+/* Responsive navigation */
+@media (max-width: 800px) {
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 18px 0;
+  }
+
+  .nav button {
+    width: auto;
+  }
+}
+
+/* MAIN CONTENT */
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 35px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.topbar h1 {
+  margin: 5px 0;
+  font-size: 30px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  font-weight: bold;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#globalSemester {
+  width: auto;
+  max-width: 220px;
+}
+
+/* CARDS AND GRIDS */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 23px;
+  box-shadow: 0 6px 22px #00000007;
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.grid.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.stat-value {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-top: 12px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* BUTTONS */
+
+button.primary {
+  border: 0;
+  background: var(--primary);
+  color: white;
+  padding: 12px 17px;
+  border-radius: 10px;
+  font-weight: 650;
+}
+
+button.secondary {
+  border: 1px solid var(--border);
+  background: var(--soft);
+  color: var(--primary);
+  padding: 11px 15px;
+  border-radius: 10px;
+}
+
+button.danger {
+  border: 0;
+  background: var(--danger);
+  color: white;
+  padding: 9px 12px;
+  border-radius: 9px;
+}
+
+button:hover {
+  filter: brightness(1.06);
+}
+
+/* FORM ELEMENTS */
+
+input,
+select,
+textarea {
+  padding: 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  min-width: 0;
+  width: 100%;
+}
+
+textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: end;
+  margin: 15px 0;
+}
+
+.field {
+  flex: 1;
+  min-width: 150px;
+}
+
+/* PAGE NAVIGATION */
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* PROGRESS BARS */
+
+.progress-track {
+  height: 12px;
+  background: var(--border);
+  border-radius: 30px;
+  overflow: hidden;
+  margin-top: 15px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    #6655eb,
+    #a69aff
+  );
+  transition: width 0.25s;
+}
+
+/* TASK LIST */
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.item:last-child {
+  border: 0;
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.item-info small {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+}
+
+.item.done strong {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+}
+
+.pill {
+  display: inline-block;
+  padding: 6px 10px;
+  background: var(--soft);
+  color: var(--primary);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+/* SUBJECTS */
+
+.subject-card {
+  border-left: 4px solid var(--primary);
+}
+
+.subject-name {
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+/* POMODORO */
+
+.big-timer {
+  text-align: center;
+  font-size: clamp(55px, 10vw, 95px);
+  font-weight: 850;
+  letter-spacing: 2px;
+  margin: 25px 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.center {
+  text-align: center;
+}
+
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* STUDY ASSISTANT */
+
+.chat-log {
+  height: 300px;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 15px;
+}
+
+.bubble {
+  padding: 12px 15px;
+  margin: 10px 0;
+  border-radius: 13px;
+  max-width: 85%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.bubble.bot {
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+.bubble.user {
+  background: var(--primary);
+  color: white;
+  margin-left: auto;
+}
+
+/* NOTES */
+
+.note {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+/* ANALYTICS */
+
+.bar-row {
+  margin: 17px 0;
+}
+
+.bar-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.bar-label span:first-child {
+  overflow-wrap: anywhere;
+}
+
+/* TIMETABLE */
+
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.day {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  min-height: 130px;
+  min-width: 0;
+}
+
+.day h4 {
+  margin: 0 0 12px;
+  font-size: 13px;
+}
+
+.session-chip {
+  background: var(--soft);
+  padding: 9px;
+  margin-bottom: 8px;
+  border-radius: 9px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.session-chip strong,
+.session-chip span {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.session-chip button {
+  font-size: 11px;
+  padding: 4px 6px;
+  border: 0;
+  color: var(--danger);
+  background: transparent;
+}
+
+/* GENERAL UTILITIES */
+
+.empty {
+  color: var(--muted);
+  padding: 15px 0;
+  font-size: 14px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.small-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 22px 0;
+}
+
+#notice {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+  background: var(--text);
+  color: var(--card);
+  padding: 13px 18px;
+  border-radius: 12px;
+  max-width: 300px;
+  box-shadow: 0 10px 30px #0002;
+}
+
+#notice:empty {
+  display: none;
+}
+
+footer {
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* TABLET */
+
+@media (max-width: 1050px) {
+  .week-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+  .app {
+    display: block;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 18px 0;
+  }
+
+  .nav button {
+    width: auto;
+  }
+
+  .main {
+    padding: 18px;
+  }
+
+  .grid,
+  .grid.two {
+    grid-template-columns: 1fr;
+  }
+
+  .week-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .topbar h1 {
+    font-size: 24px;
+  }
+}
+
+/* SMALL PHONES */
+
+@media (max-width: 420px) {
+  .week-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .item {
+    flex-wrap: wrap;
+  }
+}
+
+/* StudyFlow custom logo */
+.app-logo {
+  width: 100%;
+  max-width: 210px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Dashboard banner */
+.dashboard-banner {
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+.dashboard-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Compact dashboard banner */
+.dashboard-banner img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  object-position: center 55%;
+}
+
+@media (max-width: 600px) {
+  .dashboard-banner img {
+    height: 200px;
+  }
+}
+
+/* ==================================
+   BACKUP AND RESTORE BUTTONS
+   ================================== */
+
+.backup-section {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+.backup-section h3 {
+  font-size: 14px;
+  font-weight: 750;
+  color: var(--text);
+  margin: 0 0 15px;
+}
+
+.backup-button {
+  width: 100%;
+  display: block;
+  padding: 13px 15px;
+  margin-bottom: 10px;
+  border: 0;
+  border-radius: 11px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+}
+
+.export-button {
+  background: #e3f7ed;
+  color: #16794c;
+}
+
+.import-button {
+  background: #eeeaff;
+  color: #5946d3;
+}
+
+.backup-button:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.97);
+}
+
+.backup-help {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+
+body.dark .export-button {
+  background: #153e31;
+  color: #83e9b0;
+}
+
+body.dark .import-button {
+  background: #342b5d;
+  color: #c3b7ff;
+}
+
+/* STUDY MATERIALS */
+
+#materialFile {
+  padding: 10px;
+}
+
+.material-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.material-icon {
+  font-size: 29px;
+  flex-shrink: 0;
+}
+
+.material-info {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.material-info small {
+  display: block;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.material-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .material-item {
+    flex-wrap: wrap;
+  }
+
+  .material-actions {
+    width: 100%;
+  }
+}
+
+/* STUDYFLOW LOGIN */
+
+.cloud-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: #111529f5;
+  overflow-y: auto;
+}
+
+.cloud-gate[hidden],
+#cloudLogin[hidden],
+#cloudChoices[hidden],
+#cloudSidebar[hidden] {
+  display: none !important;
+}
+
+.cloud-login-card {
+  background: white;
+  color: #202440;
+  width: 100%;
+  max-width: 440px;
+  padding: 32px;
+  border-radius: 22px;
+  box-shadow: 0 25px 75px #0005;
+}
+
+.cloud-logo {
+  display: block;
+  width: 210px;
+  max-width: 100%;
+  margin: 0 auto 20px;
+}
+
+.cloud-login-card h2,
+.cloud-login-card p {
+  text-align: center;
+}
+
+.cloud-login-card p {
+  color: #737b95;
+  line-height: 1.5;
+}
+
+.cloud-login-card input {
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+  background: #f5f6fc;
+  color: #202440;
+}
+
+.cloud-login-card button {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  margin: 10px 0;
+  border: 1px solid #e2e4ee;
+  border-radius: 11px;
+  background: #f1eeff;
+  color: #5845ce;
+  font-weight: 700;
+}
+
+#cloudEmailLogin,
+#cloudGoogle {
+  background: #6655eb;
+  color: white;
+}
+
+#cloudStatus {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+/* CLOUD ACCOUNT SHORTCUT */
+
+#openCloudAccount {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 1000;
+
+  background: #6655eb;
+  color: white;
+
+  padding: 12px 18px;
+  border: none;
+  border-radius: 12px;
+
+  font-weight: 700;
+  cursor: pointer;
+
+  box-shadow: 0 6px 20px #0003;
+}
+
+#openCloudAccount:hover {
+  background: #5140d1;
+}
+
+#openCloudAccount[hidden] {
+  display: none !important;
+}
